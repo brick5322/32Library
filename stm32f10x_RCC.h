@@ -11,7 +11,8 @@
 #pragma once
 
 #include "stm32f10x.h"
-
+#include "astm32f10x.h"
+#include "USER_Defines"
 /**
  * @defgroup AHB总线地址宏定义
  * @{
@@ -58,9 +59,9 @@
  * @{
  **/
 
-#define HSE_OFF ((uint32_t)0x0000)        /*!<*/
-#define HSE_ON  ((uint32_t)0x00010000)    /*!<*/
-#define HSE_ByPass ((uint32_t)0x00050000) /*!<*/
+#define HSE_OFF ((uint32_t)0x0000)        /*!<  关闭HSE  */
+#define HSE_ON  ((uint32_t)0x00010000)    /*!<  打开HSE  */
+#define HSE_ByPass ((uint32_t)0x00050000) /*!<  旁路HSE  */
 
 /**
  * @}
@@ -69,7 +70,7 @@
 /**
  * @}
  **/
-
+static uint32_t SystemClock;
 /**
  * @brief RCC时钟类
  **/
@@ -86,7 +87,17 @@ private:
   uint32_t APB1ENR;
   uint32_t BDCR;
   uint32_t CSR;
+#ifdef STM32F10X_CL  
+  __IO uint32_t AHBRSTR;
+  __IO uint32_t CFGR2;
+#endif 
 
+#if defined (STM32F10X_LD_VL) || defined (STM32F10X_MD_VL) || defined (STM32F10X_HD_VL)   
+  uint32_t RESERVED0;
+  __IO uint32_t CFGR2;
+#endif
+  void RCC_Reset();
+  void RCC_SetSysClock();
 public:
   RCC_Cls();
   ~RCC_Cls();

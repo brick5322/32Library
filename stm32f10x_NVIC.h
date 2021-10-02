@@ -10,6 +10,7 @@
 #pragma once
 #include "stm32f10x.h"
 #include "core_cm3.h"
+#include "astm32f10x.h"
 
 /**
  * @addtogroup 地址宏定义

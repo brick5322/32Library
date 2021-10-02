@@ -93,7 +93,7 @@ void assert_failed(uint8_t *file, uint32_t line);
  * @defgroup AHB总线地址宏定义
  * @{
  **/
-#define Addr_AHB ((PERIEH_BASE + 0X20000))
+#define Addr_AHB ((PERIEH_BASE + 0x20000))
 
 /**
  * @}

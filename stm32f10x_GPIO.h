@@ -10,7 +10,7 @@
 
 #pragma once
 #include "stm32f10x.h"
-
+#include "astm32f10x.h"
 /**
  * @addtogroup APB2总线地址宏定义
  * @{

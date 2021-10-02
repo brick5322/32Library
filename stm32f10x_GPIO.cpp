@@ -160,8 +160,9 @@ bool Lock_Config(GPIO_Cls &GPIOx, uint16_t Pin)
 
 /**
  * @brief 修改复用端口重映射的配置
- *        调试状态下,会检查参数匹配
- *        详见官方文档
+ * @details       调试状态下,会检查参数匹配
+ *                怎么匹配以后写在文档里 \n
+ *                ！！！没写完
  * @param Periph 对应的寄存器地址
  * @param Mode 重映射类型
  * \n 见@ref  AFIO相关宏定义
