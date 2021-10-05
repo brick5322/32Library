@@ -10,7 +10,7 @@
 
 #pragma once
 #include "stm32f10x.h"
-#include "astm32f10x.h"
+
 /**
  * @addtogroup APB2总线地址宏定义
  * @{
@@ -85,20 +85,20 @@ private:
   uint32_t CRL;
   uint32_t CRH;
 
-  uint16_t IDR_reserved;
   uint16_t IDR;
+  uint16_t IDR_reserved;
 
-  uint16_t ODR_reserved;
   uint16_t ODR;
+  uint16_t ODR_reserved;
 
-  uint16_t BSRR_reset;
   uint16_t BSRR_set;
+  uint16_t BSRR_reset;
 
-  uint16_t BRR_reserved;
   uint16_t BRR;
+  uint16_t BRR_reserved;
 
-  bool LCKR_LCKK;
   uint16_t LCKR_LCK;
+  bool LCKR_LCKK;
 
 public:
   GPIO_Cls(uint16_t Pin, uint8_t Mode);
@@ -119,18 +119,19 @@ public:
 class AFIO_Cls : public Perieh_Cls
 {
 private:
+	uint8_t AFIO_EVCR;
   uint8_t AFIO_EVCR_reserved[3];
-  uint8_t AFIO_MAPR_SWJ;
-  uint8_t AFIO_MAPR_TIM5; /*  非互联型包含ADC，互联型包含CAN2和MAC  */
   uint16_t AFIO_MAPR;
-  uint16_t AFIO_EXTICR1_reserved;
+  uint8_t AFIO_MAPR_TIM5; /*  非互联型包含ADC，互联型包含CAN2和MAC  */
+  uint8_t AFIO_MAPR_SWJ;
   uint16_t AFIO_EXTICR1;
-  uint16_t AFIO_EXTICR2_reserved;
+  uint16_t AFIO_EXTICR1_reserved;
   uint16_t AFIO_EXTICR2;
-  uint16_t AFIO_EXTICR3_reserved;
+  uint16_t AFIO_EXTICR2_reserved;
   uint16_t AFIO_EXTICR3;
-  uint16_t AFIO_EXTICR4_reserved;
+  uint16_t AFIO_EXTICR3_reserved;
   uint16_t AFIO_EXTICR4;
+  uint16_t AFIO_EXTICR4_reserved;
 
 public:
   static void AFIO_Remap(void *Periph, uint8_t Mode);
