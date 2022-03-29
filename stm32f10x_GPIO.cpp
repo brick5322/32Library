@@ -10,8 +10,16 @@
 
 #include "stm32f10x_GPIO.h"
 
+GPIO_Cls& GPIOA = *(GPIOA_ptr);
+GPIO_Cls& GPIOB = *(GPIOB_ptr);
+GPIO_Cls& GPIOC = *(GPIOC_ptr);
+GPIO_Cls& GPIOD = *(GPIOD_ptr);
+GPIO_Cls& GPIOE = *(GPIOE_ptr);
+GPIO_Cls& GPIOF = *(GPIOF_ptr);
+GPIO_Cls& GPIOG = *(GPIOG_ptr);
+
 /**
- * @brief 构造GPIO对象（包括端口和引脚）并打开时钟
+ * @brief 构造GPIO对象（包括端口和引脚）
  * @param GPIO_Port GPIO端口对应的地址
  *   @arg GPIOx(x为A~G)
  * @param Pin   GPIO待设置的引脚
@@ -23,8 +31,6 @@
 */
 GPIO_Cls::GPIO_Cls(uint16_t Pin, uint8_t Mode)
 {
-    int &APB2_GPIO_Bit = *(int *)(0x42420300 + (uint8_t)((uint32_t)this >> 8));
-    APB2_GPIO_Bit = 1;
     bool pullup = Mode & 0x10;
     bool pulldown = Mode & 0x20;
     Mode &= 0xf;
@@ -59,8 +65,6 @@ GPIO_Cls::GPIO_Cls(uint16_t Pin, uint8_t Mode)
  **/
 GPIO_Cls::~GPIO_Cls()
 {
-    int &APB2_GPIO_Bit = *(int *)(0x42420300 + (uint8_t)((uint32_t)this >> 8));
-    APB2_GPIO_Bit = 0;
     this->CRH = 0X44444444;
     this->CRL = 0x44444444;
     this->ODR = 0X0000;
@@ -134,6 +138,25 @@ void GPIO_Cls::Write_AllBits(uint16_t Data)
 {
     this->ODR = Data;
 }
+/**
+ * @brief 使通过赋值开启时钟
+ **/
+const	GPIO_Cls& GPIO_Cls::operator=(const GPIO_Cls& temp)
+{
+	int &APB2_GPIO_Bit = *(int *)(0x42420300 + (uint8_t)((uint32_t)this >> 8));
+  APB2_GPIO_Bit = 1;
+	this->BRR = temp.BRR;
+	this->CRH = temp.CRH;
+	this->CRL = temp.CRL;
+	this->BSRR_reset = temp.BSRR_reset;
+	this->BSRR_set = temp.BSRR_set;
+	return *this;
+}
+void GPIO_Cls::operator delete(void* ptr)
+{
+	  int &APB2_GPIO_Bit = *(int *)(0x42420300 + (uint8_t)((uint32_t)ptr >> 8));
+    APB2_GPIO_Bit = 0;
+}
 
 /**
  * @brief 锁定GPIO对象的引脚配置(GPIO_Mode)，复位前保持锁定
@@ -189,3 +212,5 @@ void AFIO_Cls::Debug_Mode(uint8_t Mode)
 {
     AFIO_ptr->AFIO_MAPR_SWJ = Mode;
 }
+
+

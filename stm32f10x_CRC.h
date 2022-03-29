@@ -5,8 +5,8 @@ class CRC_Cls : public Perieh_Cls
 {
 private:
     volatile uint32_t DR;
-		uint8_t IDR;
-    uint8_t IDR_Reserved[3];
+    uint8_t IDR_Reserved;
+    uint8_t IDR;
     volatile bool CR;
 
 public:

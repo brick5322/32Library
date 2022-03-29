@@ -185,7 +185,6 @@ void RCC_Cls::RCC_SetSysClock()
 {
 
   uint32_t &FLASH_ACR = *(uint32_t *)(Addr_AHB + 0x2000);
-
   this->CR |= HSE_ON;
   for (int i = 0; i < Clock_Init_Delay; i++)
     if (this->CR & Private_Defines_HSE_Ready)

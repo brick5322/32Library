@@ -11,8 +11,7 @@
 #pragma once
 
 #include "stm32f10x.h"
-#include "astm32f10x.h"
-#include "USER_Defines"
+#include "USER_Defines.h"
 /**
  * @defgroup AHB总线地址宏定义
  * @{
@@ -77,7 +76,7 @@ static uint32_t SystemClock;
 class RCC_Cls : public Perieh_Cls
 {
 private:
-  uint32_t CR;
+  volatile uint32_t CR;
   uint32_t CFGR;
   uint32_t CIR;
   uint32_t APB2RSTR;
@@ -88,13 +87,13 @@ private:
   uint32_t BDCR;
   uint32_t CSR;
 #ifdef STM32F10X_CL  
-  __IO uint32_t AHBRSTR;
-  __IO uint32_t CFGR2;
+  volatile uint32_t AHBRSTR;
+  volatile uint32_t CFGR2;
 #endif 
 
 #if defined (STM32F10X_LD_VL) || defined (STM32F10X_MD_VL) || defined (STM32F10X_HD_VL)   
   uint32_t RESERVED0;
-  __IO uint32_t CFGR2;
+  volatile uint32_t CFGR2;
 #endif
   void RCC_Reset();
   void RCC_SetSysClock();

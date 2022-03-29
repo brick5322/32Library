@@ -11,18 +11,19 @@
 #pragma once
 #include "stm32f10x.h"
 
-/**
- * @addtogroup APB2总线地址宏定义
+
+class GPIO_Cls;
+ /**
+ * @addtogroup APB2外设引用
  * @{
  * */
-#define GPIOA_ptr ((GPIO_Cls *)(Addr_APB2 + 0x0800))
-#define GPIOB_ptr ((GPIO_Cls *)(Addr_APB2 + 0x0C00))
-#define GPIOC_ptr ((GPIO_Cls *)(Addr_APB2 + 0x1000))
-#define GPIOD_ptr ((GPIO_Cls *)(Addr_APB2 + 0x1400))
-#define GPIOE_ptr ((GPIO_Cls *)(Addr_APB2 + 0x1800))
-#define GPIOF_ptr ((GPIO_Cls *)(Addr_APB2 + 0x1C00))
-#define GPIOG_ptr ((GPIO_Cls *)(Addr_APB2 + 0x2000))
-
+extern GPIO_Cls& GPIOA;
+extern GPIO_Cls& GPIOB;
+extern GPIO_Cls& GPIOC;
+extern GPIO_Cls& GPIOD;
+extern GPIO_Cls& GPIOE;
+extern GPIO_Cls& GPIOF;
+extern GPIO_Cls& GPIOG;
 /**
  * @}
  * */
@@ -111,6 +112,8 @@ public:
   uint16_t Read_AllBits();
   void Write_AllBits(uint16_t Data);
   friend bool Lock_Config(GPIO_Cls &GPIOx, uint16_t Pin);
+	const GPIO_Cls& operator=(const GPIO_Cls& temp);
+  void operator delete(void*);
 };
 
 /**

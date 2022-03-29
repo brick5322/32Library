@@ -28,6 +28,8 @@
 
 #pragma once
 
+#define Dynatic_VecTable
+
 #define Success (false)
 #define Failed (true)
 
@@ -69,32 +71,43 @@ void assert_failed(uint8_t *file, uint32_t line);
 
 #define AFIO_ptr ((AFIO_Cls *)Addr_APB2)
 
-#define EXTI_ptr ((EXTI_Typedef)*Addt_APB2 + 400)
+#define GPIOA_ptr ((GPIO_Cls *)(Addr_APB2 + 0x0800))
+#define GPIOB_ptr ((GPIO_Cls *)(Addr_APB2 + 0x0C00))
+#define GPIOC_ptr ((GPIO_Cls *)(Addr_APB2 + 0x1000))
+#define GPIOD_ptr ((GPIO_Cls *)(Addr_APB2 + 0x1400))
+#define GPIOE_ptr ((GPIO_Cls *)(Addr_APB2 + 0x1800))
+#define GPIOF_ptr ((GPIO_Cls *)(Addr_APB2 + 0x1C00))
+#define GPIOG_ptr ((GPIO_Cls *)(Addr_APB2 + 0x2000))
 
-#define ADC1_ptr ((ADC_Typedef *)(Addr_APB2 + 0x2400))
-#define ADC2_ptr ((ADC_Typedef *)(Addr_APB2 + 0x2800))
-#define ADC3_ptr ((ADC_Typedef *)(Addr_APB2 + 0x3C00))
+#define EXTI_ptr ((EXTI_Cls)*Addt_APB2 + 400)
 
-#define TIM1_ptr ((TIM_Typedef *)(Addr_APB2 + 0x2C00))
-#define TIM8_ptr ((TIM_Typedef *)(Addr_APB2 + 0x3400))
-#define TIM9_ptr ((TIM_Typedef *)(Addr_APB2 + 0x4C00))
-#define TIM10_ptr ((TIM_Typedef *)(Addr_APB2 + 0x5000))
-#define TIM11_ptr ((TIM_Typedef *)(Addr_APB2 + 0x5400))
+#define ADC1_ptr ((ADC_Cls *)(Addr_APB2 + 0x2400))
+#define ADC2_ptr ((ADC_Cls *)(Addr_APB2 + 0x2800))
+#define ADC3_ptr ((ADC_Cls *)(Addr_APB2 + 0x3C00))
 
-#define SPI1_ptr ((SPI_Typedef *)(Addr_APB2 + 0x3000))
+#define TIM1_ptr ((TIM_Cls *)(Addr_APB2 + 0x2C00))
+#define TIM8_ptr ((TIM_Cls *)(Addr_APB2 + 0x3400))
+#define TIM9_ptr ((TIM_Cls *)(Addr_APB2 + 0x4C00))
+#define TIM10_ptr ((TIM_Cls *)(Addr_APB2 + 0x5000))
+#define TIM11_ptr ((TIM_Cls *)(Addr_APB2 + 0x5400))
 
-#define USART1_ptr ((USART_Typedef *)(Addr_APB2) + 0x3800)
+#define SPI1_ptr ((SPI_Cls *)(Addr_APB2 + 0x3000))
+
+#define USART1_ptr ((USART_Cls *)(Addr_APB2) + 0x3800)
 
 /**
  * @}
  * */
+ 
 
+ 
 /**
  * @defgroup AHB总线地址宏定义
  * @{
  **/
 #define Addr_AHB ((PERIEH_BASE + 0x20000))
 
+#define CRC_ptr ((CRC_Cls *)Addr_AHB + 0x3000)
 /**
  * @}
  * */
@@ -432,7 +445,6 @@ typedef enum IRQn
  * @}
  * */
 
-
 /**
  * @brief 外设基类
  * @details 定义了基类下new和delete的方式 \n
@@ -442,9 +454,9 @@ typedef enum IRQn
 class Perieh_Cls
 {
 private:
-  void* operator new(size_t);
-public:
-  void* operator new(size_t,void* p){return p;};
-  void  operator delete(void *p,size_t){};
-};
+  void *operator new(size_t);
 
+public:
+  //void *operator new(size_t, void *p) { return p; };
+  void operator delete(void *p, size_t){};
+};
